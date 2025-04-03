@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity // 테이블 선언
+@AllArgsConstructor
+@NoArgsConstructor
 public class Member {
     @Id // id pk
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 생성 전략 -> 아이디를 입력하지 않아도 자동 증가 1,2,3,...
