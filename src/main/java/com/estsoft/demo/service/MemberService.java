@@ -19,6 +19,7 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
+
     // member 테이블에 insert 쿼리
     public Member insertMember(Member member) {
         Member savedMember = memberRepository.save(member);
@@ -34,5 +35,9 @@ public class MemberService {
     // 회원 삭제 추가
     public void deleteMemberById(Long id) {
         memberRepository.deleteById(id);
+    }
+
+    public List<Member> selectMemberByName(String name) {
+        return memberRepository.findByName(name);
     }
 }

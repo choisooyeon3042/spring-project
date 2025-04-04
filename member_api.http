@@ -6,7 +6,7 @@ POST localhost:8080/members
 Content-Type: application/json
 
 {
-  "name": "보라"
+  "name": "사람"
 }
 
 ### 특정 회원 단건 조회
@@ -14,3 +14,6 @@ GET http://localhost:8080/members/3
 
 ### 회원 단건 삭제
 DELETE http://localhost:8080/members/4
+
+### 회원 이름으로 조회
+GET localhost:8080/search/members?name=보라
