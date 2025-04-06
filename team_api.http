@@ -1,4 +1,4 @@
-### GET request to example server
+### 모든 멤버 조회
 GET http://localhost:8080/members
 
 ### 모든 팀 정보 조회
