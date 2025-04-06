@@ -35,7 +35,7 @@ public class MemberController {
         // findById(id) select * from where id = #id
         return memberService.selectMemberById(id);
     }
-    
+
     // DELETE /member/{id} -> 단건 삭제
     @ResponseBody
     @DeleteMapping("/members/{id}")
@@ -50,6 +50,7 @@ public class MemberController {
     public List<Member> selectMemberByName(@RequestParam("name") String name) {
         return memberService.selectMemberByName(name);
     }
+
 
     @GetMapping("/hi")
     public String htmlPage() {

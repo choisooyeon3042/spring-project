@@ -2,8 +2,10 @@ package com.estsoft.demo.controller;
 
 import com.estsoft.demo.repository.Member;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class MemberDTO {
     public Long id;
     public String name;

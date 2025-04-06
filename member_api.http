@@ -17,3 +17,30 @@ DELETE http://localhost:8080/members/4
 
 ### 회원 이름으로 조회
 GET localhost:8080/search/members?name=보라
+
+### 모든 팀 정보 조회
+GET http://localhost:8080/teams
+
+### 팀 추가
+POST localhost:8080/teams
+Content-Type: application/json
+
+{
+  "name": "유벤투스"
+}
+
+### 팀 수정
+PUT localhost:8080/teams/5
+Content-Type: application/json
+
+{
+  "name": "파리생제르망(PSG)"
+}
+
+### 정보 추가
+POST http://localhost:8080/teams/5/members
+Content-Type: application/json
+
+{
+  "name": "PSG팀원명"
+}
