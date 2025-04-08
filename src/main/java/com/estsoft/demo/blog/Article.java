@@ -28,6 +28,12 @@ public class Article {
         this.content = content;
     }
 
+    // title, content = ? commit; => update
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
     public ArticleResponse toDto() {
         return new ArticleResponse(id, title, content);
     }

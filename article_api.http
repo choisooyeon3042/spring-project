@@ -12,3 +12,18 @@ GET http://localhost:8080/api/articles
 
 ### 게시글 단건 조회 => RESPONSE: {id: "", title: "", content: ""}
 GET http://localhost:8080/api/articles/5
+
+### DELETE 블로그 게시글 단건 삭제
+DELETE http://localhost:8080/api/articles/22
+
+### DELETE 블로그 전체 삭제
+DELETE http://localhost:8080/api/articles
+
+### PUT 블로그 게시글 수정
+PUT http://localhost:8080/api/articles/1
+Content-Type: application/json
+
+{
+  "title": "징징수정",
+  "content": "징징내용"
+}

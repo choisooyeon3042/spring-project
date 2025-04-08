@@ -3,9 +3,8 @@ package com.estsoft.demo.blog.controller;
 import com.estsoft.demo.blog.Article;
 import com.estsoft.demo.blog.dto.AddArticleRequest;
 import com.estsoft.demo.blog.dto.ArticleResponse;
+import com.estsoft.demo.blog.dto.UpdateArticleRequest;
 import com.estsoft.demo.blog.service.BlogService;
-import com.estsoft.demo.repository.Member;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 public class BlogController {
     // POST /api/articles
@@ -49,7 +47,41 @@ public class BlogController {
     // GET /articles/{id} 게시글 단건 조회
     @ResponseBody
     @GetMapping("/api/articles/{id}")
-    public Article selectArticleById(@PathVariable Long id) {
-        return blogService.selectArticleById(id);
+    public Article findArticle(@PathVariable Long id) {
+        return blogService.findArticle(id);
+    }
+
+    // DELETE /api/articles/{id}
+    // @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping("/api/articles/{id}")
+    public ResponseEntity<Void> deleteArticle(@PathVariable Long id) {
+        blogService.deleteArticle(id);
+
+        return ResponseEntity.ok().build();
+    }
+
+    // 전체 삭제
+    @DeleteMapping("/api/articles")
+    public ResponseEntity<Void> deleteAllArticles() {
+        blogService.deleteAllArticles();
+        return ResponseEntity.noContent().build();
+    }
+
+    // PUT http://localhost:8080/api/articles/1     {title, content}
+    @PutMapping("/api/articles/{id}")
+    public ResponseEntity<ArticleResponse> updateArticle(@PathVariable("id") Long id,
+                                                         @RequestBody UpdateArticleRequest request) {
+        Article article = blogService.updateArticle(id, request);
+
+        // Article -> ArticleResponse
+        ArticleResponse response = article.toDto();
+        return ResponseEntity.ok(response);
+    }
+
+    // IllegalArgumentException 500x -> 400 Error
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handlerIllegalArgumentException(IllegalArgumentException e) {
+        return e.getMessage();
     }
 }
