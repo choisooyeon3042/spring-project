@@ -1,6 +1,6 @@
 package com.estsoft.demo.blog.controller;
 
-import com.estsoft.demo.blog.Article;
+import com.estsoft.demo.blog.domain.Article;
 import org.springframework.ui.Model;
 import com.estsoft.demo.blog.dto.ArticleViewResponse;
 import com.estsoft.demo.blog.service.BlogService;

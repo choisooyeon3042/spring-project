@@ -1,6 +1,6 @@
 package com.estsoft.demo.blog.controller;
 
-import com.estsoft.demo.blog.Article;
+import com.estsoft.demo.blog.domain.Article;
 import com.estsoft.demo.blog.dto.AddArticleRequest;
 import com.estsoft.demo.blog.dto.UpdateArticleRequest;
 import com.estsoft.demo.blog.repository.BlogRepository;

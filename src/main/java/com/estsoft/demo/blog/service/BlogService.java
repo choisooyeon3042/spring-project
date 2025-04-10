@@ -1,12 +1,10 @@
 package com.estsoft.demo.blog.service;
 
-import com.estsoft.demo.blog.Article;
+import com.estsoft.demo.blog.domain.Article;
 import com.estsoft.demo.blog.dto.AddArticleRequest;
 import com.estsoft.demo.blog.dto.UpdateArticleRequest;
 import com.estsoft.demo.blog.repository.BlogRepository;
-import com.estsoft.demo.repository.Member;
 import jakarta.transaction.Transactional;
-import org.hibernate.sql.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
