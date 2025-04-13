@@ -1,6 +1,6 @@
 package com.estsoft.demo.blog.dto;
 
-import com.estsoft.demo.blog.domain.Article;
+import com.estsoft.demo.blog.domain.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,8 +15,8 @@ public class AddArticleRequest {
 
     // AddArticleRequest -> Article(Entity)
     @Builder
-    public Article toEntity() {
-        return Article.builder()
+    public Post toEntity() {
+        return Post.builder()
                 .title(title)
                 .content(content)
                 .build();

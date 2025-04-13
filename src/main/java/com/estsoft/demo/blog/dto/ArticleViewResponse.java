@@ -1,6 +1,6 @@
 package com.estsoft.demo.blog.dto;
 
-import com.estsoft.demo.blog.domain.Article;
+import com.estsoft.demo.blog.domain.Post;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +14,7 @@ public class ArticleViewResponse {
     private String content;
     private LocalDateTime createdAt;
 
-    public ArticleViewResponse(Article article) {
+    public ArticleViewResponse(Post article) {
        this.id = article.getId();
        this.title = article.getTitle();
        this.content = article.getContent();

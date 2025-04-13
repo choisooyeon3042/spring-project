@@ -1,6 +1,6 @@
 package com.estsoft.demo.blog.controller;
 
-import com.estsoft.demo.blog.domain.Article;
+import com.estsoft.demo.blog.domain.Post;
 import com.estsoft.demo.blog.dto.AddArticleRequest;
 import com.estsoft.demo.blog.dto.UpdateArticleRequest;
 import com.estsoft.demo.blog.repository.BlogRepository;
@@ -66,7 +66,7 @@ class BlogControllerTest {
     @Test
     public void findAllArticles() throws Exception{
         // given: article 값 저장
-        Article savedArticle = Article.builder()
+        Post savedArticle = Post.builder()
                 .title("저장하려는 제목")
                 .content("저장하려는 내용")
                 .build();
@@ -87,7 +87,7 @@ class BlogControllerTest {
     @Test
     public void findArticleById() throws Exception {
         // given: article 값 저장, id
-        Article article = blogRepository.save(new Article("제목TT", "내용CC"));
+        Post article = blogRepository.save(new Post("제목TT", "내용CC"));
         Long id = article.getId();
 
         // when: GET /api/articles/{id} API호출                        /api/articles/3
@@ -104,7 +104,7 @@ class BlogControllerTest {
     @Test
     public void deleteArticle() throws Exception{
         // given: article 저장, getId
-        Article article = blogRepository.save(new Article("제목0_0", "내용"));
+        Post article = blogRepository.save(new Post("제목0_0", "내용"));
         Long id = article.getId();
 
         // when: DELETE API 호출
@@ -113,7 +113,7 @@ class BlogControllerTest {
         // then: status code 200 ok 검증, article 전체 조회 결과 isEmpty() true
         resultActions.andExpect(status().isOk());
 
-        List<Article> list = blogRepository.findAll();
+        List<Post> list = blogRepository.findAll();
         Assertions.assertThat(list).isEmpty();
         Assertions.assertThat(list.size()).isEqualTo(0);
 
@@ -123,7 +123,7 @@ class BlogControllerTest {
     @Test
     public void updateArticle() throws Exception {
         // given: 게시글 추가, id추출, 수정할 값 셋팅(json)
-        Article saved = blogRepository.save(new Article("dummy_title", "dummy_content"));
+        Post saved = blogRepository.save(new Post("dummy_title", "dummy_content"));
         Long id = saved.getId();
         UpdateArticleRequest request = new UpdateArticleRequest("update_title", "update_content");
 
@@ -140,7 +140,7 @@ class BlogControllerTest {
                 .andExpect(jsonPath("$.title").value(request.getTitle()))
                 .andExpect(jsonPath("$.content").value(request.getContent()));
 
-        Article article = blogRepository.findById(id).orElseThrow();
+        Post article = blogRepository.findById(id).orElseThrow();
         // article.getTitle() == request.getTitle();
         assertThat(article.getTitle()).isEqualTo(request.getTitle());
         assertThat(article.getContent()).isEqualTo(request.getContent());
