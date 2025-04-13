@@ -1,25 +1,26 @@
 package com.estsoft.demo.controller;
 
-import com.estsoft.demo.service.ExternalService;
+import com.estsoft.demo.service.ExternalCommentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ExternalApiController {
+public class ExternalCommentApiController {
 
-    private final ExternalService externalService;
+    private final ExternalCommentService commentService;
 
-    public ExternalApiController(ExternalService externalService) {
-        this.externalService = externalService;
+    public ExternalCommentApiController(ExternalCommentService commentService) {
+        this.commentService = commentService;
     }
 
-    @GetMapping("/api/external")
+    @GetMapping("/api/external/comment")
     public ResponseEntity<String> callExternal() {
         // RestTemplate
-        externalService.call();
+        commentService.call();
 
         return ResponseEntity.ok().build();
     }
 }
+

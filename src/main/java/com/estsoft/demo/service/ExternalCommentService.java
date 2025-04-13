@@ -1,8 +1,8 @@
 package com.estsoft.demo.service;
 
-import com.estsoft.demo.domain.ExternalArticle;
-import com.estsoft.demo.dto.PostContent;
-import com.estsoft.demo.repository.ExternalArticleRepository;
+import com.estsoft.demo.domain.ExternalComment;
+import com.estsoft.demo.dto.CommentContent;
+import com.estsoft.demo.repository.ExternalCommentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -16,24 +16,23 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ExternalService {
-    private final ExternalArticleRepository articleRepository;
+public class ExternalCommentService {
+    private final ExternalCommentRepository commentRepository;
 
     public void call() {
-        String url = "https://jsonplaceholder.typicode.com/posts";
+        String url = "https://jsonplaceholder.typicode.com/comments";
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<List<PostContent>> response =
+        ResponseEntity<List<CommentContent>> response =
                 restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<>() {});
-        List<PostContent> postContents = response.getBody();
+        List<CommentContent> commentContents = response.getBody();
 
         // 저장
-        List<ExternalArticle> articles = postContents.stream()
-                .map(PostContent::toEntity)
+        List<ExternalComment> comments = commentContents.stream()
+                .map(CommentContent::toEntity)
                 .toList();
 
-        articleRepository.saveAll(articles);
+        commentRepository.saveAll(comments);
 
     }
-
 }
