@@ -1,6 +1,6 @@
-package com.estsoft.demo.dto;
+package com.estsoft.demo.external.dto;
 
-import com.estsoft.demo.domain.ExternalComment;
+import com.estsoft.demo.external.domain.ExternalComment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

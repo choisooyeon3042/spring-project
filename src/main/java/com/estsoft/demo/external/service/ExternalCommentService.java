@@ -1,8 +1,8 @@
-package com.estsoft.demo.service;
+package com.estsoft.demo.external.service;
 
-import com.estsoft.demo.domain.ExternalComment;
-import com.estsoft.demo.dto.CommentContent;
-import com.estsoft.demo.repository.ExternalCommentRepository;
+import com.estsoft.demo.external.domain.ExternalComment;
+import com.estsoft.demo.external.dto.CommentContent;
+import com.estsoft.demo.external.repository.ExternalCommentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;

@@ -1,4 +1,4 @@
-package com.estsoft.demo.domain;
+package com.estsoft.demo.external.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

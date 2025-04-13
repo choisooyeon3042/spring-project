@@ -1,8 +1,7 @@
-package com.estsoft.demo.controller;
+package com.estsoft.demo.external.controller;
 
-import com.estsoft.demo.service.ExternalService;
+import com.estsoft.demo.external.service.ExternalService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
