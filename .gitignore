@@ -36,4 +36,4 @@ out/
 ### VS Code ###
 .vscode/
 
-src/main/java/com/example/demo/configuration/
+src/main/java/com/estsoft/demo/configuration/
