@@ -1,8 +1,8 @@
 package com.estsoft.demo.blog.service;
 
 import com.estsoft.demo.blog.domain.Post;
-import com.estsoft.demo.blog.dto.AddArticleRequest;
-import com.estsoft.demo.blog.dto.UpdateArticleRequest;
+import com.estsoft.demo.blog.dto.AddPostRequest;
+import com.estsoft.demo.blog.dto.UpdatePostRequest;
 import com.estsoft.demo.blog.repository.BlogRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class BlogService {
         this.blogRepository = blogRepository;
     }
 
-    public Post saveArticle(AddArticleRequest request) {
+    public Post saveArticle(AddPostRequest request) {
         return blogRepository.save(request.toEntity());
     }
 
@@ -47,7 +47,7 @@ public class BlogService {
     // 수정 method
     // 트랜잭션 커밋을 해줘야 변경 감지해서 update해줌
     @Transactional // = begin; commit;
-    public Post updateArticle(Long id, UpdateArticleRequest request) {
+    public Post updateArticle(Long id, UpdatePostRequest request) {
         // findById (수정하기 이전 Article 객체)
         Post article = blogRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not exists id:" + id)); // 수정할 수 없는 상태

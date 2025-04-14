@@ -1,9 +1,9 @@
 package com.estsoft.demo.blog.controller;
 
 import com.estsoft.demo.blog.domain.Post;
-import com.estsoft.demo.blog.dto.AddArticleRequest;
-import com.estsoft.demo.blog.dto.ArticleResponse;
-import com.estsoft.demo.blog.dto.UpdateArticleRequest;
+import com.estsoft.demo.blog.dto.AddPostRequest;
+import com.estsoft.demo.blog.dto.PostResponse;
+import com.estsoft.demo.blog.dto.UpdatePostRequest;
 import com.estsoft.demo.blog.service.BlogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,8 +23,8 @@ public class BlogController {
     }
 
     // ResponseEntity
-    @PostMapping("/api/articles")
-    public ResponseEntity<ArticleResponse> saveArticle(@RequestBody AddArticleRequest request) {
+    @PostMapping("/api/posts")
+    public ResponseEntity<PostResponse> saveArticle(@RequestBody AddPostRequest request) {
         Post savedArticle = blogService.saveArticle(request);
 
         // Article -> ArticleResponse 변환 후 리턴
@@ -33,12 +33,12 @@ public class BlogController {
                 .body(savedArticle.toDto());
     }
 
-    @GetMapping("/api/articles")
-    public ResponseEntity <List<ArticleResponse>> findAllArticles() {
+    @GetMapping("/api/posts")
+    public ResponseEntity <List<PostResponse>> findAllArticles() {
        List<Post> articles = blogService.findArticles();
 
-       List<ArticleResponse> responseBody = articles.stream().map(article ->
-               new ArticleResponse(article.getId(), article.getTitle(), article.getContent()))
+       List<PostResponse> responseBody = articles.stream().map(article ->
+               new PostResponse(article.getId(), article.getTitle(), article.getContent()))
                .toList();
 
        return ResponseEntity.ok(responseBody); // 200 status
@@ -46,14 +46,14 @@ public class BlogController {
 
     // GET /articles/{id} 게시글 단건 조회
     @ResponseBody
-    @GetMapping("/api/articles/{id}")
+    @GetMapping("/api/posts/{id}")
     public Post findArticle(@PathVariable Long id) {
         return blogService.findArticle(id);
     }
 
     // DELETE /api/articles/{id}
     // @RequestMapping(method = RequestMethod.DELETE)
-    @DeleteMapping("/api/articles/{id}")
+    @DeleteMapping("/api/posts/{id}")
     public ResponseEntity<Void> deleteArticle(@PathVariable Long id) {
         blogService.deleteArticle(id);
 
@@ -61,27 +61,21 @@ public class BlogController {
     }
 
     // 전체 삭제
-    @DeleteMapping("/api/articles")
+    @DeleteMapping("/api/posts")
     public ResponseEntity<Void> deleteAllArticles() {
         blogService.deleteAllArticles();
         return ResponseEntity.noContent().build();
     }
 
     // PUT http://localhost:8080/api/articles/1     {title, content}
-    @PutMapping("/api/articles/{id}")
-    public ResponseEntity<ArticleResponse> updateArticle(@PathVariable("id") Long id,
-                                                         @RequestBody UpdateArticleRequest request) {
+    @PutMapping("/api/posts/{id}")
+    public ResponseEntity<PostResponse> updateArticle(@PathVariable("id") Long id,
+                                                      @RequestBody UpdatePostRequest request) {
         Post article = blogService.updateArticle(id, request);
 
         // Article -> ArticleResponse
-        ArticleResponse response = article.toDto();
+        PostResponse response = article.toDto();
         return ResponseEntity.ok(response);
     }
 
-    // IllegalArgumentException 500x -> 400 Error
-    @ExceptionHandler(IllegalArgumentException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handlerIllegalArgumentException(IllegalArgumentException e) {
-        return e.getMessage();
-    }
 }

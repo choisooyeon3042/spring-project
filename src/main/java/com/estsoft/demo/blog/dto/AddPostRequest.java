@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddArticleRequest {
+public class AddPostRequest {
     private String title;
     private String content;
 

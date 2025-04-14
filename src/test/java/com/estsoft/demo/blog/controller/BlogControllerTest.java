@@ -1,8 +1,8 @@
 package com.estsoft.demo.blog.controller;
 
 import com.estsoft.demo.blog.domain.Post;
-import com.estsoft.demo.blog.dto.AddArticleRequest;
-import com.estsoft.demo.blog.dto.UpdateArticleRequest;
+import com.estsoft.demo.blog.dto.AddPostRequest;
+import com.estsoft.demo.blog.dto.UpdatePostRequest;
 import com.estsoft.demo.blog.repository.BlogRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
@@ -47,7 +47,7 @@ class BlogControllerTest {
     @Test
     void saveArticle() throws Exception {
         // given:   Object -> json (ObjectMapper 사용해서 직렬화)
-        AddArticleRequest request = new AddArticleRequest("제목", "내용");
+        AddPostRequest request = new AddPostRequest("제목", "내용");
         String requestBody = objectMapper.writeValueAsString(request);  // 직렬화
 //        System.out.println("requestBody: " + requestBody);
 
@@ -125,7 +125,7 @@ class BlogControllerTest {
         // given: 게시글 추가, id추출, 수정할 값 셋팅(json)
         Post saved = blogRepository.save(new Post("dummy_title", "dummy_content"));
         Long id = saved.getId();
-        UpdateArticleRequest request = new UpdateArticleRequest("update_title", "update_content");
+        UpdatePostRequest request = new UpdatePostRequest("update_title", "update_content");
 
         // request(object) -> json 직렬화     // jackson
         String requestBody = objectMapper.writeValueAsString(request);
@@ -151,7 +151,7 @@ class BlogControllerTest {
     public void updateArticleFailed() throws Exception{
         // given: id = ?
         Long noExistsId = 1000L;
-        UpdateArticleRequest request = new UpdateArticleRequest("수정할_title", "수정할_content");
+        UpdatePostRequest request = new UpdatePostRequest("수정할_title", "수정할_content");
         String requestBody = objectMapper.writeValueAsString(request);
 
         // when: 게시글 수정 api호출

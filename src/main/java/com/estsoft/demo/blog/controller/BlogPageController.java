@@ -20,38 +20,38 @@ public class BlogPageController {
         this.blogService = blogService;
     }
 
-    @GetMapping("/articles")
+    @GetMapping("/posts")
     public String getArticles(Model model) {
         List<ArticleViewResponse> articleList = blogService.findArticles()
                         .stream().map(ArticleViewResponse::new)
                         .toList();
 
-        model.addAttribute("articles", articleList);
-        return "articleList"; // html 페이지
+        model.addAttribute("posts", articleList);
+        return "postList"; // html 페이지
     }
 
-    // /articles/{id} -> article.html
-    @GetMapping("/articles/{id}")
+    // /articles/{id} -> post.html
+    @GetMapping("/posts/{id}")
     public String getArticle(@PathVariable Long id, Model model) {
         // 게시글 단건 조회
         Post article = blogService.findArticle(id);
 
-        model.addAttribute("article", new ArticleViewResponse(article));
+        model.addAttribute("post", new ArticleViewResponse(article));
 
-        return "article";
+        return "post";
     }
 
-    // /new-article -> newArticle.html (생성/수정)
-    // /new-article?id=1 @RequestParam
-    // /new-article/{id} @PathVariable
-    @GetMapping("/new-article")               // id 값이 필수가 아님.
+    // /new-post -> newPost.html (생성/수정)
+    // /new-post?id=1 @RequestParam
+    // /new-post/{id} @PathVariable
+    @GetMapping("/new-post")               // id 값이 필수가 아님.
     public String showBlogEditPage(@RequestParam(required = false) Long id, Model model) {
         if (id == null) {
-            model.addAttribute("article", new ArticleViewResponse());
+            model.addAttribute("post", new ArticleViewResponse());
         } else {
             Post article = blogService.findArticle(id);
-            model.addAttribute("article", new ArticleViewResponse(article));
+            model.addAttribute("post", new ArticleViewResponse(article));
         }
-        return "newArticle";
+        return "newPost";
     }
 }

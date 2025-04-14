@@ -1,6 +1,6 @@
 package com.estsoft.demo.blog.domain;
 
-import com.estsoft.demo.blog.dto.ArticleResponse;
+import com.estsoft.demo.blog.dto.PostResponse;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "post")
 public class Post {
 
     @Id
@@ -46,8 +47,8 @@ public class Post {
         this.content = content;
     }
 
-    public ArticleResponse toDto() {
-        return new ArticleResponse(id, title, content);
+    public PostResponse toDto() {
+        return new PostResponse(id, title, content);
     }
 
     // 빌더 패턴
