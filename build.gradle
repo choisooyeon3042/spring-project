@@ -14,7 +14,7 @@ java {
 	}
 }
 
-application {
+bootRun {
 	mainClass = 'com.estsoft.demo.DemoApplication'
 }
 
