@@ -1,5 +1,36 @@
+### POST create request to blog server
+POST http://localhost:8080/api/articles
+Content-Type: application/json
+
+{
+  "title": "제목",
+  "content": "내용"
+}
+
+
+### GET 블로그 전체 목록 조회
+GET http://localhost:8080/api/articles
+
+
+### 블로그 게시글 단건 조회
+GET http://localhost:8080/api/articles/2
+
+
+### DELETE 블로그 게시글 단건 삭제
+DELETE http://localhost:8080/api/articles/1
+
+
+### PUT 블로그 게시글 수정
+PUT http://localhost:8080/api/articles/9
+Content-Type: application/json
+
+{
+  "title": "제목9999999",
+  "content": "내용9999999"
+}
+
 ### POST 새 댓글 생성
-POST http://localhost:8080/api/articles/3/comments
+POST http://localhost:8080/api/articles/1/comments
 Content-Type: application/json
 
 {
@@ -22,4 +53,4 @@ Content-Type: application/json
 DELETE http://localhost:8080/api/comments/3
 
 ### 게시글과 댓글 정보를 한번에 조회
-GET http://localhost:8080/api/articles/3/comments
+GET http://localhost:8080/api/articles/1/comments
