@@ -1,38 +1,41 @@
-package com.estsoft.demo.comment.domain;
+package com.estsoft.demo.blog.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Entity
-@NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "comments")
+@Entity
+@EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor
 public class Comment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
-
-    @ManyToOne
-    @JoinColumn(name = "article_id", referencedColumnName = "articleId", nullable = false)
-    @JsonBackReference
-    private Article article;
 
     private String body;
 
     @CreatedDate
     private LocalDateTime createdAt;
 
-    public Comment(Article article, String body, LocalDateTime createdAt) {
-        this.article = article;
+    @ManyToOne
+    @JoinColumn(name = "article_id")
+    private Article article;
+
+    public Comment(String body, Article article) {
         this.body = body;
-        this.createdAt = createdAt;
+        this.article = article;
     }
+
+    public Comment updateBody(String body) {
+        this.body = body;
+        return this;
+    }
+
 }

@@ -1,9 +1,9 @@
 package com.estsoft.demo.blog.controller;
 
-import com.estsoft.demo.blog.domain.Post;
-import com.estsoft.demo.blog.dto.AddPostRequest;
+import com.estsoft.demo.blog.domain.Article;
+import com.estsoft.demo.blog.dto.AddArticleRequest;
 import com.estsoft.demo.blog.dto.UpdatePostRequest;
-import com.estsoft.demo.blog.repository.BlogRepository;
+import com.estsoft.demo.blog.repository.ArticleRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +33,7 @@ class BlogControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
-    private BlogRepository blogRepository;
+    private ArticleRepository blogRepository;
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -46,7 +46,7 @@ class BlogControllerTest {
     @Test
     void saveArticle() throws Exception {
         // given:   Object -> json (ObjectMapper 사용해서 직렬화)
-        AddPostRequest request = new AddPostRequest("제목", "내용");
+        AddArticleRequest request = new AddArticleRequest("제목", "내용");
         String requestBody = objectMapper.writeValueAsString(request);  // 직렬화
 //        System.out.println("requestBody: " + requestBody);
 
@@ -65,7 +65,7 @@ class BlogControllerTest {
     @Test
     public void findAllArticles() throws Exception {
 //        given: article 값 저장
-        Post savedArticle = Post.builder()
+        Article savedArticle = Article.builder()
                 .title("저장하려는 제목")
                 .content("저장하려는 내용")
                 .build();
@@ -84,7 +84,7 @@ class BlogControllerTest {
     @Test
     public void findArticle() throws Exception {
         // given: Article 저장, id
-        Post article = blogRepository.save(new Post("제목123", "내용123"));
+        Article article = blogRepository.save(new Article("제목123", "내용123"));
         Long id = article.getId();
 
         // when: API 호출 코드    GET /api/articles/3
@@ -100,7 +100,7 @@ class BlogControllerTest {
     @Test
     public void deleteArticle() throws Exception {
         // given: article 저장, getId
-        Post article = blogRepository.save(new Post("제목123", "내용1234"));
+        Article article = blogRepository.save(new Article("제목123", "내용1234"));
         Long id = article.getId();
 
         // when: DELETE API 호출
@@ -109,14 +109,14 @@ class BlogControllerTest {
         // then: status code 200 ok 검증, article 전체 조회시 빈 리스트 검증
         resultActions.andExpect(status().isOk());
 
-        List<Post> list = blogRepository.findAll();
+        List<Article> list = blogRepository.findAll();
         assertThat(list).isEmpty();
     }
 
     @Test
     public void updateArticle() throws Exception {
         // given: 게시글 추가, id추출, 수정할 값 셋팅 (json)
-        Post saved = blogRepository.save(new Post("dummy title", "dummy content"));
+        Article saved = blogRepository.save(new Article("dummy title", "dummy content"));
         Long id = saved.getId();
         UpdatePostRequest request = new UpdatePostRequest("update title", "update content");
 
@@ -133,7 +133,7 @@ class BlogControllerTest {
                 .andExpect(jsonPath("$.title").value(request.getTitle()))
                 .andExpect(jsonPath("$.content").value(request.getContent()));
 
-        Post article = blogRepository.findById(id).orElseThrow();
+        Article article = blogRepository.findById(id).orElseThrow();
         assertThat(article.getTitle()).isEqualTo(request.getTitle());
         assertThat(article.getContent()).isEqualTo(request.getContent());
     }

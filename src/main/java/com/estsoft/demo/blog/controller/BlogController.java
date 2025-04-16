@@ -1,9 +1,8 @@
 package com.estsoft.demo.blog.controller;
 
-import com.estsoft.demo.blog.domain.Post;
-import com.estsoft.demo.blog.dto.AddPostRequest;
-import com.estsoft.demo.blog.dto.PostResponse;
-import com.estsoft.demo.blog.dto.UpdatePostRequest;
+import com.estsoft.demo.blog.domain.Article;
+import com.estsoft.demo.blog.domain.Comment;
+import com.estsoft.demo.blog.dto.*;
 import com.estsoft.demo.blog.service.BlogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,18 +13,16 @@ import java.util.List;
 
 @RestController
 public class BlogController {
-    // POST /api/articles
-    // { title: "", content: ""}
+
     private final BlogService blogService;
 
     public BlogController(BlogService blogService) {
         this.blogService = blogService;
     }
 
-    // ResponseEntity
-    @PostMapping("/api/posts")
-    public ResponseEntity<PostResponse> saveArticle(@RequestBody AddPostRequest request) {
-        Post savedArticle = blogService.saveArticle(request);
+    @PostMapping("/api/articles")
+    public ResponseEntity<ArticleResponse> saveArticle(@RequestBody AddArticleRequest request) {
+        Article savedArticle = blogService.saveArticle(request);
 
         // Article -> ArticleResponse 변환 후 리턴
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -33,49 +30,66 @@ public class BlogController {
                 .body(savedArticle.toDto());
     }
 
-    @GetMapping("/api/posts")
-    public ResponseEntity <List<PostResponse>> findAllArticles() {
-       List<Post> articles = blogService.findArticles();
+    @GetMapping("/api/articles")
+    public ResponseEntity<List<ArticleResponse>> findAllArticles() {
+        List<Article> articles = blogService.findArticles();
 
-       List<PostResponse> responseBody = articles.stream().map(article ->
-               new PostResponse(article.getId(), article.getTitle(), article.getContent()))
-               .toList();
+        List<ArticleResponse> responseBody = articles.stream()
+                .map(ArticleResponse::new)
+                .toList();
 
-       return ResponseEntity.ok(responseBody); // 200 status
+        return ResponseEntity.ok(responseBody);
     }
 
-    // GET /articles/{id} 게시글 단건 조회
-    @ResponseBody
-    @GetMapping("/api/posts/{id}")
-    public Post findArticle(@PathVariable Long id) {
-        return blogService.findArticle(id);
+    // 단건 조회 GET /api/articles/{id}
+    @GetMapping("/api/articles/{id}")
+    public ResponseEntity<ArticleResponse> findArticle(@PathVariable("id") Long id) {
+        Article article = blogService.findArticle(id);
+        return ResponseEntity.ok(article.toDto());
     }
 
-    // DELETE /api/articles/{id}
-    // @RequestMapping(method = RequestMethod.DELETE)
-    @DeleteMapping("/api/posts/{id}")
-    public ResponseEntity<Void> deleteArticle(@PathVariable Long id) {
+    @DeleteMapping("/api/articles/{id}")
+    public ResponseEntity<Void> deleteArticle(@PathVariable("id") Long id) {
         blogService.deleteArticle(id);
 
         return ResponseEntity.ok().build();
     }
 
-    // 전체 삭제
-    @DeleteMapping("/api/posts")
-    public ResponseEntity<Void> deleteAllArticles() {
-        blogService.deleteAllArticles();
-        return ResponseEntity.noContent().build();
+    @PutMapping("/api/articles/{id}")
+    public ResponseEntity<ArticleResponse> updateArticle(@PathVariable("id") Long id,
+                                                         @RequestBody UpdateArticleRequest request) {
+        Article article = blogService.updateArticle(id, request);
+
+        ArticleResponse response = article.toDto();
+        return ResponseEntity.ok(response);
     }
 
-    // PUT http://localhost:8080/api/articles/1     {title, content}
-    @PutMapping("/api/posts/{id}")
-    public ResponseEntity<PostResponse> updateArticle(@PathVariable("id") Long id,
-                                                      @RequestBody UpdatePostRequest request) {
-        Post article = blogService.updateArticle(id, request);
+    @PostMapping("/api/articles/{articleId}/comments")
+    public ResponseEntity<CommentResponse> saveComment(@PathVariable("articleId") Long articleId,
+                                                       @RequestBody CommentRequest request) {
+        Comment comment = blogService.saveComment(articleId, request);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new CommentResponse(comment));
+    }
 
-        // Article -> ArticleResponse
-        PostResponse response = article.toDto();
-        return ResponseEntity.ok(response);
+    @GetMapping("/api/comments/{commentId}")
+    public ResponseEntity<CommentResponse> findComment(@PathVariable("commentId") Long commentId) {
+        Comment comment = blogService.findComment(commentId);
+        return ResponseEntity.ok(new CommentResponse(comment));
+    }
+
+    @PutMapping("/api/comments/{commentId}")
+    public ResponseEntity<CommentResponse> updateComment(@PathVariable Long commentId,
+                                                         @RequestBody CommentRequest request) {
+        Comment comment = blogService.updateComment(commentId, request);
+        return ResponseEntity.ok(new CommentResponse(comment));
+    }
+
+    @DeleteMapping("/api/comments/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
+        blogService.deleteComment(commentId);
+
+        return ResponseEntity.noContent().build();
     }
 
 }

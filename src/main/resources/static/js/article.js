@@ -5,12 +5,12 @@ if (deleteButton) {
         const isConfirmed = confirm('정말 삭제하시겠습니까?');
         if (!isConfirmed) return;
 
-        let id = document.getElementById('post-id').value;
-        fetch(`/api/posts/${id}`, {
+        let id = document.getElementById('article-id').value;
+        fetch(`/api/articles/${id}`, {
             method: 'DELETE'
         }).then(() => {
             alert('삭제가 완료되었습니다');
-            location.replace('/posts');
+            location.replace('/articles');
         });
     });
 }
@@ -24,7 +24,7 @@ if (modifyButton) {
         let params = new URLSearchParams(location.search);
         let id = params.get('id');
 
-        fetch(`/api/posts/${id}`, {
+        fetch(`/api/articles/${id}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json",
@@ -35,7 +35,7 @@ if (modifyButton) {
             })
         }).then(() => {
             alert('수정이 완료되었습니다');
-            location.replace(`/posts/${id}`);
+            location.replace(`/articles/${id}`);
         });
     });
 }
@@ -45,7 +45,7 @@ const createButton = document.getElementById('create-btn');
 
 if (createButton) {
     createButton.addEventListener('click', event => {
-        fetch(`/api/posts`, {
+        fetch(`/api/articles`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -56,7 +56,7 @@ if (createButton) {
             }),
         }).then(() => {
             alert('등록 완료되었습니다');
-            location.replace("/posts");
+            location.replace("/articles");
         })
     })
 }

@@ -1,9 +1,9 @@
 package com.estsoft.demo.blog.repository;
 
-import com.estsoft.demo.blog.domain.Post;
+import com.estsoft.demo.blog.domain.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface BlogRepository extends JpaRepository<Post, Long> {
+@Repository("blogCommentRepository")
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 }

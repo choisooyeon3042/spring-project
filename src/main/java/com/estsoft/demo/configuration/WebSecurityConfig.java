@@ -22,10 +22,10 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(auth ->              // 인증, 인가 설정
                         auth.requestMatchers("/login", "/signup", "/user").permitAll()
-                                .requestMatchers("/new-post").permitAll()
+                                .requestMatchers("/new-article").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(auth -> auth.loginPage("/login")     // 폼 기반 로그인 설정
-                        .defaultSuccessUrl("/posts"))
+                        .defaultSuccessUrl("/articles"))
                 .logout(auth -> auth.logoutSuccessUrl("/login") // 로그아웃 설정
                         .invalidateHttpSession(true)
                         .clearAuthentication(true))

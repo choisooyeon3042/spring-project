@@ -5,10 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
-public class PostResponse {
-    private Long id;
+@NoArgsConstructor
+public class UpdateArticleRequest {
     private String title;
     private String content;
 }
+
